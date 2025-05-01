@@ -1,0 +1,21 @@
+{
+  "name": "@ghibli/upload",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "tsx --env-file=../.env ./index.ts",
+    "dev": "tsx watch --env-file=../.env ./index.ts"
+  },
+  "src": "index.ts",
+  "files": [
+    "."
+  ],
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.2",
+    "hono": "^4.6.16",
+    "minio": "^7.1.4",
+    "tsx": "^4.7.2"
+  }
+}

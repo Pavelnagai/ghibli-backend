@@ -1,0 +1,1 @@
+ALTER TABLE images ADD COLUMN processed_image_url TEXT NOT NULL; 

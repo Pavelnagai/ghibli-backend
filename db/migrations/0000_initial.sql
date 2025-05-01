@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS images (
+    id TEXT PRIMARY KEY,
+    url TEXT NOT NULL
+); 
