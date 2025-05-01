@@ -23,4 +23,4 @@ EXPOSE 8080
 COPY wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 
-CMD ["/wait-for-it.sh", "db:5432", "minio:9000", "--", "node", "dist/index.js"] 
+CMD ["/wait-for-it.sh", "node", "dist/index.js"] 
