@@ -3,17 +3,24 @@
 # Wait for services to be ready
 echo "Waiting for services to be ready..."
 
+# Function to check if a service is ready
+check_service() {
+    local host=$1
+    local port=$2
+    local service=$3
+    
+    while ! nc -z -v -w5 $host $port 2>/dev/null; do
+        echo "Waiting for $service..."
+        sleep 1
+    done
+    echo "$service is ready!"
+}
+
 # Wait for PostgreSQL
-until nc -z db 5432; do
-  echo "Waiting for PostgreSQL..."
-  sleep 1
-done
+check_service db 5432 "PostgreSQL"
 
 # Wait for MinIO
-until nc -z minio 9000; do
-  echo "Waiting for MinIO..."
-  sleep 1
-done
+check_service minio 9000 "MinIO"
 
 echo "All services are ready!"
 

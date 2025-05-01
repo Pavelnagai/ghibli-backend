@@ -14,6 +14,9 @@ services:
         condition: service_healthy
     volumes:
       - app_data:/app/uploads
+    links:
+      - db
+      - minio
     networks:
       - app-network
 
@@ -40,12 +43,14 @@ services:
     image: minio/minio
     container_name: minio
     environment:
-      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
-      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
-    command: server /data --console-address ":${MINIO_CONSOLE_PORT}"
+      - MINIO_ROOT_USER=ghibliadmin
+      - MINIO_ROOT_PASSWORD=ghibliadmin123
+      - MINIO_PORT=9000
+      - MINIO_CONSOLE_PORT=9001
+    command: server /data --console-address ":9001"
     ports:
-      - "${MINIO_PORT}:9000" # API
-      - "${MINIO_CONSOLE_PORT}:${MINIO_CONSOLE_PORT}" # Console
+      - "9000:9000" # API
+      - "9001:9001" # Console
     volumes:
       - minio_data:/data
     restart: unless-stopped
@@ -55,7 +60,7 @@ services:
           "CMD",
           "curl",
           "-f",
-          "http://localhost:${MINIO_PORT}/minio/health/live",
+          "http://localhost:9000/minio/health/live",
         ]
       interval: 30s
       timeout: 20s
