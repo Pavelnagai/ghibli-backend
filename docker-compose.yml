@@ -12,6 +12,7 @@ services:
       - minio
     volumes:
       - app_data:/app/uploads
+    hostname: db
 
   db:
     image: postgres:15-alpine
