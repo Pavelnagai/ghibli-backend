@@ -35,9 +35,10 @@ app.onError((err, c) => {
 	if (err instanceof HTTPException) {
 		const status = err.status;
 		const message = err.message || "Server Error";
+		const cause = (err as any).cause;
 
-		if (status === 400 && err.cause) {
-			return c.json({ message, errors: err.cause }, status);
+		if (status === 400 && cause) {
+			return c.json({ message, errors: cause }, status);
 		}
 
 		return c.json({ message }, status);
