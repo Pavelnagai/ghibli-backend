@@ -2,6 +2,7 @@ import { StyleGenerator, ImageStyle } from '../../types/styles';
 import { createOpenAI } from '@ai-sdk/openai';
 import { generateText } from 'ai';
 import OpenAI from 'openai';
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 
 export abstract class BaseStyleGenerator implements StyleGenerator {
     protected openai: ReturnType<typeof createOpenAI>;
@@ -23,8 +24,13 @@ export abstract class BaseStyleGenerator implements StyleGenerator {
     abstract getStyleDescription(): string;
 
     protected async generatePrompt(imageUrl: string, styleDescription: string): Promise<string> {
+        const openrouter = createOpenRouter({ apiKey: process.env.OPENROUTER_API_KEY });
+        const MODEL_DEFAULT = openrouter.chat(
+            "openai/gpt-4o-mini",
+)
+
         const { text } = await generateText({
-            model: this.openai('gpt-4o-mini'),
+            model: MODEL_DEFAULT,
             messages: [
                 {
                     role: 'user',
